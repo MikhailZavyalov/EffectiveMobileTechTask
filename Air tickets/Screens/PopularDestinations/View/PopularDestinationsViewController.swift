@@ -3,10 +3,6 @@ import UIKit
 
 final class PopularDestinationsViewController: UIViewController {
 
-//FIXME
-    private let ticketsOffersVC = TicketsOffersViewController()
-
-//FIXME
     private var rectangle: UIImageView = {
         var rectangle = UIImage(named: "rectangle")
         var view = UIImageView(image: rectangle)
@@ -62,39 +58,38 @@ final class PopularDestinationsViewController: UIViewController {
 
     private let popularDestinationsTableView: UITableView = {
         let tableView = UITableView()
-        tableView.layer.cornerRadius = 16
         tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = .clear
         return tableView
     }()
 
-    private let viewModel: ViewModel
+    private let viewModel: PopularDestinationsViewModel
 
-    init(viewModel: ViewModel) {
+    init(viewModel: PopularDestinationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.init(hexString: "242529")
         popularDestinationsTableView.dataSource = self
+        popularDestinationsTableView.delegate = self
         popularDestinationsTableView.register(PopularDestinationsTableViewCell.self, forCellReuseIdentifier: PopularDestinationsTableViewCell.reuseID)
         fromTextField.text = viewModel.fromTextFieldText
-        toTextField.addTarget(self, action: #selector(goToTicketsOffersScreen), for: .editingDidEnd)
-        ticketsOffersVC.modalTransitionStyle = .crossDissolve
-        ticketsOffersVC.modalPresentationStyle = .fullScreen
+        toTextField.addTarget(self, action: #selector(textFieldEditingEnd), for: .editingDidEnd)
 
         setupConstraints()
     }
 
     @objc
-    func goToTicketsOffersScreen() {
-        self.present(ticketsOffersVC, animated: true, completion: nil)
+    func textFieldEditingEnd() {
+        viewModel.textFieldEditingEnd()
     }
 
     private func setupConstraints() {
@@ -164,48 +159,45 @@ final class PopularDestinationsViewController: UIViewController {
             hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
             popularDestinationsTableView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 26),
-            popularDestinationsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             popularDestinationsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             popularDestinationsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            popularDestinationsTableView.heightAnchor.constraint(equalToConstant: 216),
+            popularDestinationsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
 
         ])
     }
+}
+
+extension PopularDestinationsViewController: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        UIView()
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        UIView()
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        20
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        20
+//    }
 }
 
 extension PopularDestinationsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.cellModels.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = popularDestinationsTableView.dequeueReusableCell(withIdentifier: PopularDestinationsTableViewCell.reuseID, for: indexPath)
         guard let settingsCell = cell as? PopularDestinationsTableViewCell else { return cell }
-        settingsCell.configure(with: viewModel.cellModels[indexPath.row])
+        settingsCell.configure(
+            with: viewModel.cellModels[indexPath.row],
+            isFirst: indexPath.row == 0,
+            isLast: indexPath.row == viewModel.cellModels.count - 1
+        )
         return settingsCell
     }
-    
-
-}
-
-final class Model {
-    let mockData = [
-        (image: "istanbul", title: "Стамбул"),
-        (image: "sochi", title: "Сочи"),
-        (image: "phuket", title: "Пхукет")
-    ]
-}
-
-final class ViewModel {
-    let model: Model
-    let cellModels: [PopularDestinationsTableViewCellModel]
-    let fromTextFieldText: String
-
-    init(model: Model, fromTextFieldText: String) {
-        self.model = model
-        cellModels = model.mockData.map { PopularDestinationsTableViewCellModel(image: $0.image, title: $0.title) }
-        self.fromTextFieldText = fromTextFieldText
-    }
-
-
 }

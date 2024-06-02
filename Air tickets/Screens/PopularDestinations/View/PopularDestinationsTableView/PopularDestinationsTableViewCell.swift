@@ -33,12 +33,14 @@ final class PopularDestinationsTableViewCell: UITableViewCell {
         return separator
     }()
 
+    private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(image)
-        image.translatesAutoresizingMaskIntoConstraints = false
-        contentView.heightAnchor.constraint(equalToConstant: 75).isActive = true
+        backgroundColor = .clear
         contentView.backgroundColor = UIColor.init(hexString: "2F3035")
+        contentView.layer.cornerRadius = 16
         selectionStyle = .none
 
         setupConstraints()
@@ -48,12 +50,27 @@ final class PopularDestinationsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with model: PopularDestinationsTableViewCellModel) {
+    func configure(with model: PopularDestinationsTableViewCellModel, isFirst: Bool, isLast: Bool) {
         image.image = UIImage(named: model.image)
         titleLabel.text = model.title
+        
+        topConstraint?.constant = isFirst ? 24 : 16
+        bottomConstraint?.constant = isLast ? -16 : 0
+
+        contentView.layer.maskedCorners = []
+        if isFirst {
+            contentView.layer.maskedCorners.insert(.layerMinXMinYCorner)
+            contentView.layer.maskedCorners.insert(.layerMaxXMinYCorner)
+        }
+        if isLast {
+            contentView.layer.maskedCorners.insert(.layerMinXMaxYCorner)
+            contentView.layer.maskedCorners.insert(.layerMaxXMaxYCorner)
+        }
     }
 
     private func setupConstraints() {
+        contentView.addSubview(image)
+        image.translatesAutoresizingMaskIntoConstraints = false
         let titleAndSubtitleStackView = UIStackView(arrangedSubviews: [titleLabel, subTitleLabel])
         contentView.addSubview(titleAndSubtitleStackView)
         titleAndSubtitleStackView.axis = .vertical
@@ -64,18 +81,27 @@ final class PopularDestinationsTableViewCell: UITableViewCell {
         contentView.addSubview(separator)
         separator.translatesAutoresizingMaskIntoConstraints = false
 
+        topConstraint = image.topAnchor.constraint(
+            equalTo: contentView.topAnchor,
+            constant: 16
+        )
+
+        bottomConstraint = separator.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: 0
+        )
+
         let constraints = [
+            topConstraint!,
             image.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -8),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             image.heightAnchor.constraint(equalToConstant: 40),
             image.widthAnchor.constraint(equalToConstant: 40),
 
-//            titleAndSubtitleStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 24),
-//            titleAndSubtitleStackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: 8),
             titleAndSubtitleStackView.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -8),
             titleAndSubtitleStackView.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 8),
-
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            
+            bottomConstraint!,
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
         ]

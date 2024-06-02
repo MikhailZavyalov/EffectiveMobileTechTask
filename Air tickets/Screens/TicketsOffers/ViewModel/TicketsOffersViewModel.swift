@@ -6,10 +6,12 @@ final class TicketsOffersViewModel {
 
     private let model: TicketsOffersModel
 //  private let coordinator: StatisticsNavigation
+    let fromTextFieldText: String
 
-    init(model: TicketsOffersModel/*, coordinator: StatisticsRouter*/) {
+    init(model: TicketsOffersModel, fromTextFieldText: String/*, coordinator: StatisticsRouter*/) {
         self.model = model
 //        self.coordinator = coordinator
+        self.fromTextFieldText = fromTextFieldText
     }
 
     func loadTicketsOffersData() {

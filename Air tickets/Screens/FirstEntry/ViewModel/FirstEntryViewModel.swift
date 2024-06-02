@@ -4,24 +4,19 @@ final class FirstEntryViewModel {
     @Observable
     var flyAwayModels: [FlyAwayMusicallyCellModel] = []
 
-    @Observable
-    var ticketsOffersModels: [PopularDestinationsTableViewCellModel] = []
-
     var fromTextFieldLastValue: String? {
         didSet {
             model.saveFromTextFieldLastValue(fromTextFieldLastValue)
         }
     }
 
-    weak var viewController: FirstEntryViewController?
+    weak var firstEntryViewController: FirstEntryViewController?
 
     private let model: FirstEntryModel
-//    private let coordinator: StatisticsNavigation
     private let router: Router
 
-    init(model: FirstEntryModel, router: Router/*, coordinator: StatisticsRouter*/) {
+    init(model: FirstEntryModel, router: Router) {
         self.model = model
-//        self.coordinator = coordinator
         self.router = router
         fromTextFieldLastValue = model.loadCachedFromTextFieldLastValue()
     }
@@ -45,12 +40,12 @@ final class FirstEntryViewModel {
 
     func toTextFieldTapped() {
         guard
-            let viewController,
+            let firstEntryViewController,
             let fromTextFieldLastValue,
             !fromTextFieldLastValue.isEmpty 
         else { return }
         router.presentPopularDestinationsScreen(
-            from: viewController,
+            from: firstEntryViewController,
             fromTextFieldText: fromTextFieldLastValue
         )
     }

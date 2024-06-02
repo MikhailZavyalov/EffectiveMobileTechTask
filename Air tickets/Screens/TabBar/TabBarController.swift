@@ -51,8 +51,7 @@ class TabBarController: UITabBarController {
         let model = FirstEntryModel(networkService: AppDelegate.networkService)
         let viewModel = FirstEntryViewModel(model: model, router: AppDelegate.router)
         let viewController = FirstEntryViewController(viewModel: viewModel)
-        viewModel.viewController = viewController
+        viewModel.firstEntryViewController = viewController
         return viewController
     }
-
 }

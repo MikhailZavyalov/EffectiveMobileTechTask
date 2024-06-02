@@ -3,7 +3,7 @@ import UIKit
 
 final class TicketsOffersViewController: UIViewController {
 
-//    private let viewModel: TicketsOffersViewModel
+    private let viewModel: TicketsOffersViewModel
 
     private let mockModels = [TicketsOffersTableViewCellModel(
         image: "redCircle",
@@ -97,19 +97,19 @@ final class TicketsOffersViewController: UIViewController {
         return button
     }()
 
-//    init(viewModel: TicketsOffersViewModel) {
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//
-//        viewModel.$ticketsOffersModels.bind(executeInitially: true) { [weak self] models in
-//            print("🍎", models)
-//
-//        }
-//    }
+    init(viewModel: TicketsOffersViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
 
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+        viewModel.$ticketsOffersModels.bind(executeInitially: true) { [weak self] models in
+            print("🍎", models)
+
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,7 +117,7 @@ final class TicketsOffersViewController: UIViewController {
         ticketsOffersTableView.delegate = self
         ticketsOffersTableView.dataSource = self
         ticketsOffersTableView.register(TicketsOffersTableViewCell.self, forCellReuseIdentifier: TicketsOffersTableViewCell.reuseID)
-//        viewModel.loadTicketsOffersData()
+        viewModel.loadTicketsOffersData()
         seeAllTicketsButton.addTarget(self, action: #selector(goToAllTicketsScreen), for: .touchUpInside)
 
         setupConstraints()
@@ -235,6 +235,4 @@ extension TicketsOffersViewController: UITableViewDataSource {
         ticketsOfferCell.configure(with: mockModels[indexPath.row])
         return ticketsOfferCell
     }
-    
-    
 }

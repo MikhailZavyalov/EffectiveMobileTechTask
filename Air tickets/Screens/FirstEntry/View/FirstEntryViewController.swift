@@ -53,9 +53,10 @@ class FirstEntryViewController: UIViewController {
         var textField = UITextField()
         textField.font = .boldText16
         textField.attributedPlaceholder = NSAttributedString(
-            string: "Откуда - Tbilisi",
+            string: "Откуда - Москва",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
         )
+        textField.textColor = UIColor.white
         return textField
     }()
 
@@ -63,7 +64,7 @@ class FirstEntryViewController: UIViewController {
         var textField = UITextField()
         textField.font = .boldText16
         textField.attributedPlaceholder = NSAttributedString(
-            string: "Куда - Krakow",
+            string: "Куда - Турция",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
         )
         textField.textColor = UIColor(hexString: "9F9F9F")
