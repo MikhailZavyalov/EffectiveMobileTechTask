@@ -51,16 +51,62 @@ final class PopularDestinationsViewController: UIViewController {
         return textField
     }()
 
-    private var spacerView: UIView = {
+    private let spacerView: UIView = {
         let spacer = UIView()
         spacer.backgroundColor = UIColor(hexString: "3E3F43")
         return spacer
     }()
 
-    private var difficultRoute = PopularDestinationsImageView(image: "difficultRoute", text: "Сложный\n маршрут")
-    private var anywhere = PopularDestinationsImageView(image: "anywhere", text: "Куда угодно")
-    private var weekend = PopularDestinationsImageView(image: "weekend", text: "Выходные")
-    private var hotTickets = PopularDestinationsImageView(image: "hotTickets", text: "Горячие билеты")
+    private let clearButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "clear"), for: .normal)
+        return button
+    }()
+
+    private var difficultRoute = PopularDestinationsButtonsView(image: "difficultRoute")
+    private var anywhere = PopularDestinationsButtonsView(image: "anywhere")
+    private var weekend = PopularDestinationsButtonsView(image: "weekend")
+    private var hotTickets = PopularDestinationsButtonsView(image: "hotTickets")
+
+    private let difficultRouteText: UILabel = {
+        let text = UILabel()
+        text.text = "Сложный\n маршрут"
+        text.numberOfLines = 2
+        text.textAlignment = .center
+        text.textColor = .white
+        text.font = UIFont.regular14
+        return text
+    }()
+
+    private let anywhereText: UILabel = {
+        let text = UILabel()
+        text.text = "Куда угодно"
+        text.numberOfLines = 1
+        text.textAlignment = .center
+        text.textColor = .white
+        text.font = UIFont.regular14
+        return text
+    }()
+
+    private let weekendText: UILabel = {
+        let text = UILabel()
+        text.text = "Выходные"
+        text.numberOfLines = 1
+        text.textAlignment = .center
+        text.textColor = .white
+        text.font = UIFont.regular14
+        return text
+    }()
+
+    private let hotTicketsText: UILabel = {
+        let text = UILabel()
+        text.text = "Горячие\n билеты"
+        text.numberOfLines = 2
+        text.textAlignment = .center
+        text.textColor = .white
+        text.font = UIFont.regular14
+        return text
+    }()
 
     private let popularDestinationsTableView: UITableView = {
         let tableView = UITableView()
@@ -90,12 +136,29 @@ final class PopularDestinationsViewController: UIViewController {
         fromTextField.text = viewModel.fromTextFieldText
         toTextField.addTarget(self, action: #selector(textFieldEditingEnd), for: .editingDidEnd)
 
+        clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
+
+        difficultRoute.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
+        weekend.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
+        hotTickets.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
+        anywhere.addTarget(self, action: #selector(printAnywhere), for: .touchUpInside)
+
         setupConstraints()
     }
 
     @objc
     func textFieldEditingEnd() {
         viewModel.textFieldEditingEnd()
+    }
+
+    @objc 
+    func goToStubScreen() {
+
+    }
+
+    @objc
+    func printAnywhere() {
+        toTextField.text = "Куда угодно"
     }
 
     private func setupConstraints() {
@@ -120,16 +183,30 @@ final class PopularDestinationsViewController: UIViewController {
         searchView.addSubview(toTextField)
         toTextField.translatesAutoresizingMaskIntoConstraints = false
 
+        searchView.addSubview(clearButton)
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+
         let hStack = UIStackView(arrangedSubviews: [difficultRoute, anywhere, weekend, hotTickets])
         hStack.axis = .horizontal
-        hStack.spacing = 16
-        hStack.distribution = .fillEqually
+        hStack.distribution = .equalSpacing
         hStack.alignment = .center
         hStack.translatesAutoresizingMaskIntoConstraints = false
         difficultRoute.translatesAutoresizingMaskIntoConstraints = false
         anywhere.translatesAutoresizingMaskIntoConstraints = false
         weekend.translatesAutoresizingMaskIntoConstraints = false
         hotTickets.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(difficultRouteText)
+        difficultRouteText.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(anywhereText)
+        anywhereText.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(weekendText)
+        weekendText.translatesAutoresizingMaskIntoConstraints = false
+
+        view.addSubview(hotTicketsText)
+        hotTicketsText.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(hStack)
 
@@ -168,17 +245,47 @@ final class PopularDestinationsViewController: UIViewController {
             spacerView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
             spacerView.heightAnchor.constraint(equalToConstant: 1),
 
-            hStack.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 26),
-            hStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            hStack.heightAnchor.constraint(equalToConstant: 90),
-            hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            clearButton.topAnchor.constraint(equalTo: spacerView.bottomAnchor, constant: 8),
+            clearButton.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
+            clearButton.heightAnchor.constraint(equalToConstant: 24),
+            clearButton.widthAnchor.constraint(equalToConstant: 24),
 
-            popularDestinationsTableView.topAnchor.constraint(equalTo: hStack.bottomAnchor, constant: 26),
+            hStack.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 26),
+            hStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -26),
+            hStack.heightAnchor.constraint(equalToConstant: 48),
+            hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 26),
+
+            difficultRoute.heightAnchor.constraint(equalToConstant: 48),
+            difficultRoute.widthAnchor.constraint(equalToConstant: 48),
+
+            difficultRouteText.topAnchor.constraint(equalTo: difficultRoute.bottomAnchor, constant: 8),
+            difficultRouteText.centerXAnchor.constraint(equalTo: difficultRoute.centerXAnchor, constant: 0),
+
+            anywhere.heightAnchor.constraint(equalToConstant: 48),
+            anywhere.widthAnchor.constraint(equalToConstant: 48),
+            anywhereText.topAnchor.constraint(equalTo: anywhere.bottomAnchor, constant: 8),
+            anywhereText.centerXAnchor.constraint(equalTo: anywhere.centerXAnchor, constant: 0),
+
+            weekend.heightAnchor.constraint(equalToConstant: 48),
+            weekend.widthAnchor.constraint(equalToConstant: 48),
+            weekendText.topAnchor.constraint(equalTo: weekend.bottomAnchor, constant: 8),
+            weekendText.centerXAnchor.constraint(equalTo: weekend.centerXAnchor, constant: 0),
+
+            hotTickets.heightAnchor.constraint(equalToConstant: 48),
+            hotTickets.widthAnchor.constraint(equalToConstant: 48),
+            hotTicketsText.topAnchor.constraint(equalTo: hotTickets.bottomAnchor, constant: 8),
+            hotTicketsText.centerXAnchor.constraint(equalTo: hotTickets.centerXAnchor, constant: 0),
+
+            popularDestinationsTableView.topAnchor.constraint(equalTo: difficultRouteText.bottomAnchor, constant: 26),
             popularDestinationsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             popularDestinationsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             popularDestinationsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16),
 
         ])
+    }
+
+    @objc func clearText() {
+        toTextField.text = ""
     }
 }
 

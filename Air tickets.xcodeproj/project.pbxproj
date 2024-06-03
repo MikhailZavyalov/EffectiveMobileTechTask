@@ -23,6 +23,7 @@
 		C10959862C0CB6A60036CCEB /* PopularDestinationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10959852C0CB6A60036CCEB /* PopularDestinationsViewModel.swift */; };
 		C10959882C0CB6CD0036CCEB /* PopularDestinationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10959872C0CB6CD0036CCEB /* PopularDestinationsModel.swift */; };
 		C109598A2C0D07D80036CCEB /* AllTicketsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10959892C0D07D80036CCEB /* AllTicketsDTO.swift */; };
+		C109598C2C0DEBB50036CCEB /* StubScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C109598B2C0DEBB50036CCEB /* StubScreen.swift */; };
 		C10DE6A12C05E57C0086F816 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A02C05E57C0086F816 /* AppDelegate.swift */; };
 		C10DE6A52C05E57C0086F816 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A42C05E57C0086F816 /* SceneDelegate.swift */; };
 		C10DE6A72C05E57C0086F816 /* FirstEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A62C05E57C0086F816 /* FirstEntryViewController.swift */; };
@@ -46,7 +47,7 @@
 		C1D5B4632C08B61F002317CF /* GeometricParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D5B4622C08B61F002317CF /* GeometricParams.swift */; };
 		C1D5B4652C08CE36002317CF /* CollectionViewScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D5B4642C08CE36002317CF /* CollectionViewScroll.swift */; };
 		C1D5B4682C08DBE7002317CF /* PopularDestinationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D5B4672C08DBE7002317CF /* PopularDestinationsViewController.swift */; };
-		C1D5B46A2C08E701002317CF /* PopularDestinationsImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D5B4692C08E701002317CF /* PopularDestinationsImageView.swift */; };
+		C1D5B46A2C08E701002317CF /* PopularDestinationsButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D5B4692C08E701002317CF /* PopularDestinationsButtonsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		C10959852C0CB6A60036CCEB /* PopularDestinationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsViewModel.swift; sourceTree = "<group>"; };
 		C10959872C0CB6CD0036CCEB /* PopularDestinationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsModel.swift; sourceTree = "<group>"; };
 		C10959892C0D07D80036CCEB /* AllTicketsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTicketsDTO.swift; sourceTree = "<group>"; };
+		C109598B2C0DEBB50036CCEB /* StubScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubScreen.swift; sourceTree = "<group>"; };
 		C10DE69D2C05E57C0086F816 /* Air tickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air tickets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10DE6A02C05E57C0086F816 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C10DE6A42C05E57C0086F816 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -110,7 +112,7 @@
 		C1D5B4622C08B61F002317CF /* GeometricParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeometricParams.swift; sourceTree = "<group>"; };
 		C1D5B4642C08CE36002317CF /* CollectionViewScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewScroll.swift; sourceTree = "<group>"; };
 		C1D5B4672C08DBE7002317CF /* PopularDestinationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsViewController.swift; sourceTree = "<group>"; };
-		C1D5B4692C08E701002317CF /* PopularDestinationsImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsImageView.swift; sourceTree = "<group>"; };
+		C1D5B4692C08E701002317CF /* PopularDestinationsButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsButtonsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +171,7 @@
 			children = (
 				C14FD8382C075B7E00AC44AC /* PopularDestinationsTableView */,
 				C1D5B4672C08DBE7002317CF /* PopularDestinationsViewController.swift */,
-				C1D5B4692C08E701002317CF /* PopularDestinationsImageView.swift */,
+				C1D5B4692C08E701002317CF /* PopularDestinationsButtonsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -350,7 +352,7 @@
 				C10959602C0A1B370036CCEB /* TicketsOffers */,
 				C109595C2C09E9520036CCEB /* PopularDestinations */,
 				C10DE6EB2C064CCE0086F816 /* FirstEntry */,
-				C10DE6ED2C064CF00086F816 /* BlankScreen */,
+				C10DE6ED2C064CF00086F816 /* BlankScreens */,
 				C10DE6EE2C064CFD0086F816 /* TabBar */,
 				C10959832C0C9F7D0036CCEB /* Router.swift */,
 			);
@@ -367,12 +369,13 @@
 			path = FirstEntry;
 			sourceTree = "<group>";
 		};
-		C10DE6ED2C064CF00086F816 /* BlankScreen */ = {
+		C10DE6ED2C064CF00086F816 /* BlankScreens */ = {
 			isa = PBXGroup;
 			children = (
 				C10DE6D32C05EDEF0086F816 /* BlankScreenViewController.swift */,
+				C109598B2C0DEBB50036CCEB /* StubScreen.swift */,
 			);
-			path = BlankScreen;
+			path = BlankScreens;
 			sourceTree = "<group>";
 		};
 		C10DE6EE2C064CFD0086F816 /* TabBar */ = {
@@ -576,7 +579,7 @@
 				C10DE6F52C064E550086F816 /* Observable.swift in Sources */,
 				C10959762C0C87550036CCEB /* AllTicketsModel.swift in Sources */,
 				C10959672C0A20420036CCEB /* TicketsOffersFlightSettingsButton.swift in Sources */,
-				C1D5B46A2C08E701002317CF /* PopularDestinationsImageView.swift in Sources */,
+				C1D5B46A2C08E701002317CF /* PopularDestinationsButtonsView.swift in Sources */,
 				C10959842C0C9F7D0036CCEB /* Router.swift in Sources */,
 				C109596C2C0B97030036CCEB /* TicketsOffersTableViewCellModel.swift in Sources */,
 				C109598A2C0D07D80036CCEB /* AllTicketsDTO.swift in Sources */,
@@ -586,6 +589,7 @@
 				C109597F2C0C87B00036CCEB /* AllTicketsTableViewCell.swift in Sources */,
 				C10DE6DF2C0634FA0086F816 /* FlyAwayMusicallyCellModel.swift in Sources */,
 				C10DE6F92C064E990086F816 /* FirstEntryModel.swift in Sources */,
+				C109598C2C0DEBB50036CCEB /* StubScreen.swift in Sources */,
 				C10DE6E72C0641470086F816 /* OfferDTO.swift in Sources */,
 				C1D5B4612C08AB01002317CF /* UICollectionViewCell + ReuseID.swift in Sources */,
 				C10DE6D72C06004C0086F816 /* Colors.swift in Sources */,
