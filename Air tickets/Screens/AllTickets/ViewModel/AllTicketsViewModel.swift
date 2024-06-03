@@ -39,13 +39,31 @@ final class AllTicketsViewModel {
 
 private extension AllTicketsTableViewCellModel {
     init(ticketDTO: TicketDTO) {
-        badge = ticketDTO.badge
+        badge = ticketDTO.badge ?? ""
         price = "\(ticketDTO.price.value)"
-        departureTime = ticketDTO.departure.date
-        arrivalTime = ticketDTO.arrival.date
-        flightTime = "хардкод"
-        noTransfers = ticketDTO.has_transfer
+        let departure = ticketDTO.departure.date
+        let arrival = ticketDTO.arrival.date
+        departureTime = dateFormatter.string(from: departure)
+        arrivalTime = dateFormatter.string(from: arrival)
+        let hours = arrival.timeIntervalSince(departure) / 60 / 60
+        flightTime = String(format: "%g", (floor(hours * 10) / 10).round(nearest: 0.5)) + "ч в пути"
+        noTransfers = ticketDTO.has_transfer ? "" : "/Без пересадок"
         departureAirport = ticketDTO.departure.airport
         arrivalAirport = ticketDTO.arrival.airport
+    }
+}
+
+private let dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateStyle = .none
+    formatter.timeStyle = .short
+    return formatter
+}()
+
+extension Double {
+    func round(nearest: Double) -> Double {
+        let n = 1 / nearest
+        let numberToRound = self * n
+        return numberToRound.rounded() / n
     }
 }

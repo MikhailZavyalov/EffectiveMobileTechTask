@@ -5,50 +5,61 @@ final class AllTicketsTableViewCell: UITableViewCell {
 
     private let badge: UILabel = {
         let label = UILabel()
+        label.textColor = .white
+        label.layer.cornerRadius = 50
+        label.backgroundColor = UIColor(hexString: "#2261BC")
         return label
     }()
 
     private let price: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         return label
     }()
 
-    private let image: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.masksToBounds = true
-        return imageView
+    private let image: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = true
+        view.backgroundColor = UIColor.init(hexString: "FF5E5E")
+        return view
     }()
 
     private let departureAndArrivalTime: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         return label
     }()
 
     private let flightTime: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         return label
     }()
 
     private let noTransfers: UILabel = {
         let label = UILabel()
+        label.textColor = .white
         return label
     }()
 
     private let departureAirport: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor(hexString: "9F9F9F")
         return label
     }()
 
     private let arrivalAirport: UILabel = {
         let label = UILabel()
+        label.textColor = UIColor(hexString: "9F9F9F")
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        backgroundColor = .clear
         contentView.backgroundColor = UIColor.init(hexString: "1D1E20")
         contentView.layer.cornerRadius = 16
+        backgroundColor = .clear
         selectionStyle = .none
 
         setupConstraints()
@@ -58,12 +69,13 @@ final class AllTicketsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+
     func configure(with model: AllTicketsTableViewCellModel) {
         badge.text = model.badge
         price.text = model.price
         departureAndArrivalTime.text = "\(model.departureTime)-\(model.arrivalTime)"
         flightTime.text = model.flightTime
-        noTransfers.text = "/\(model.noTransfers)"
+        noTransfers.text = model.noTransfers
         departureAirport.text = model.departureAirport
         arrivalAirport.text = model.arrivalAirport
     }

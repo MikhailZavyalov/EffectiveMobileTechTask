@@ -7,7 +7,7 @@ struct AllTicketsTableViewCellModel {
     let departureTime: String
     let arrivalTime: String
     let flightTime: String
-    let noTransfers: Bool
+    let noTransfers: String
     let departureAirport: String
     let arrivalAirport: String
 }
