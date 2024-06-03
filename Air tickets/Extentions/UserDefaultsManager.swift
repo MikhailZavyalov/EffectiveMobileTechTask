@@ -5,6 +5,7 @@ enum UserDefaultsManager {
 
     enum Key: String {
         case fromTextFieldLastValue
+        case toTextFieldLastValue
     }
 
     private static let userDefaults = UserDefaults.standard
