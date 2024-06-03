@@ -12,7 +12,7 @@ final class StubScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         returnOnPreviousScreenButton.addTarget(self, action: #selector(returnOnPreviousScreen), for: .touchUpInside)
-
+        view.backgroundColor = .black
         setupConstraints()
     }
 
