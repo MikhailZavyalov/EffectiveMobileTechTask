@@ -3,12 +3,13 @@ import Foundation
 protocol NetworkService {
     func fetchOffers(completion: @escaping (Result<OffersDTO, Error>) -> Void)
     func fetchTicketsOffers(completion: @escaping (Result<TicketsOffersDTO, Error>) -> Void)
-//    func fetchTickets(completion: @escaping (Result<TicketDTO, Error>) -> Void)
+    func fetchTickets(completion: @escaping (Result<AllTicketsDTO, Error>) -> Void)
 }
 
 final class NetworkServiceImplementation: NetworkService {
     static let offersURL = URL(string: "https://run.mocky.io/v3/214a1713-bac0-4853-907c-a1dfc3cd05fd")
     static let ticketsOffersURL = URL(string: "https://run.mocky.io/v3/7e55bf02-89ff-4847-9eb7-7d83ef884017")
+    static let allTicketsURL = URL(string: "https://run.mocky.io/v3/670c3d56-7f03-4237-9e34-d437a9e56ebf")
 
     enum NetworkError: Error {
         case httpError(Int)
@@ -24,10 +25,11 @@ final class NetworkServiceImplementation: NetworkService {
         guard let ticketsOffersURL = NetworkServiceImplementation.ticketsOffersURL else { return }
         fetchData(url: ticketsOffersURL, completion: completion)
     }
-//
-//    func fetchTickets(completion: @escaping (Result<TicketDTO, Error>) -> Void) {
-//
-//    }
+
+    func fetchTickets(completion: @escaping (Result<AllTicketsDTO, Error>) -> Void) {
+        guard let allTicketsURL = NetworkServiceImplementation.allTicketsURL else {return}
+        fetchData(url: allTicketsURL, completion: completion)
+    }
 
     private func fetchData<DTO: Decodable>(url: URL, completion: @escaping (Result<DTO, Error>) -> Void) {
         let request = URLRequest(url: url)

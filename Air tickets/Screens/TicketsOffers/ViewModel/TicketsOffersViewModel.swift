@@ -5,13 +5,18 @@ final class TicketsOffersViewModel {
     var ticketsOffersModels: [TicketsOffersTableViewCellModel] = []
 
     private let model: TicketsOffersModel
-//  private let coordinator: StatisticsNavigation
-    let fromTextFieldText: String
+    private let router: Router
 
-    init(model: TicketsOffersModel, fromTextFieldText: String/*, coordinator: StatisticsRouter*/) {
+    let fromTextFieldText: String
+    var fromTextFieldLastValue: String?
+
+    weak var ticketsOffersViewController: TicketsOffersViewController?
+
+    init(model: TicketsOffersModel, router: Router, fromTextFieldText: String) {
         self.model = model
-//        self.coordinator = coordinator
+        self.router = router
         self.fromTextFieldText = fromTextFieldText
+        fromTextFieldLastValue = model.loadCachedFromTextFieldLastValue()
     }
 
     func loadTicketsOffersData() {
@@ -29,6 +34,15 @@ final class TicketsOffersViewModel {
                 }
             }
         }
+    }
+
+    func seeAllTicketsButtonTap() {
+        guard
+            let ticketsOffersViewController,
+            let fromTextFieldLastValue,
+            !fromTextFieldLastValue.isEmpty
+        else { return }
+        router.presentAllTicketsViewController(from: ticketsOffersViewController, fromTextFieldText: fromTextFieldLastValue)
     }
 }
 

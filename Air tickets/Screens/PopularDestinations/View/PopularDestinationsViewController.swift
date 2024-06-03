@@ -4,41 +4,47 @@ import UIKit
 final class PopularDestinationsViewController: UIViewController {
 
     private var rectangle: UIImageView = {
-        var rectangle = UIImage(named: "rectangle")
-        var view = UIImageView(image: rectangle)
+        let rectangle = UIImage(named: "rectangle")
+        let view = UIImageView(image: rectangle)
         return view
     }()
 
     private var searchView: UIView = {
-        var view = UIView()
-        view.backgroundColor = UIColor(hexString: "3E3F43")
+        let view = UIView()
+        view.backgroundColor = UIColor(hexString: "2F3035")
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = false
         view.layer.shadowOpacity = 1
         view.layer.shadowRadius = 5
-        view.layer.shadowColor = UIColor.black.cgColor //UIColor(named: "shadowColor")?.cgColor
+        view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
         return view
     }()
 
+    private var airplaneImage: UIImageView = {
+        let image = UIImage(named: "airplane")
+        let view = UIImageView(image: image)
+        return view
+    }()
+
     private var searchImage: UIImageView = {
-        var image = UIImage(named: "search")
-        var view = UIImageView(image: image)
+        let image = UIImage(named: "search")
+        let view = UIImageView(image: image)
         return view
     }()
 
     private var fromTextField: UITextField = {
-        var textField = UITextField()
+        let textField = UITextField()
         textField.font = .boldText16
         textField.textColor = UIColor.white
         return textField
     }()
 
     private var toTextField: UITextField = {
-        var textField = UITextField()
+        let textField = UITextField()
         textField.font = .boldText16
         textField.attributedPlaceholder = NSAttributedString(
-            string: "Куда - Krakow",
+            string: "Куда - Турция",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
         )
         textField.textColor = UIColor(hexString: "9F9F9F")
@@ -46,8 +52,8 @@ final class PopularDestinationsViewController: UIViewController {
     }()
 
     private var spacerView: UIView = {
-        var spacer = UIView()
-        spacer.backgroundColor = UIColor(hexString: "9F9F9F9F")
+        let spacer = UIView()
+        spacer.backgroundColor = UIColor(hexString: "3E3F43")
         return spacer
     }()
 
@@ -99,17 +105,20 @@ final class PopularDestinationsViewController: UIViewController {
         view.addSubview(searchView)
         searchView.translatesAutoresizingMaskIntoConstraints = false
 
+        searchView.addSubview(airplaneImage)
+        airplaneImage.translatesAutoresizingMaskIntoConstraints = false
+
         searchView.addSubview(searchImage)
         searchImage.translatesAutoresizingMaskIntoConstraints = false
 
-        let vStack = UIStackView(arrangedSubviews: [fromTextField, spacerView, toTextField])
-        vStack.axis = .vertical
-        vStack.translatesAutoresizingMaskIntoConstraints = false
+        searchView.addSubview(fromTextField)
         fromTextField.translatesAutoresizingMaskIntoConstraints = false
-        spacerView.translatesAutoresizingMaskIntoConstraints = false
-        toTextField.translatesAutoresizingMaskIntoConstraints = false
 
-        searchView.addSubview(vStack)
+        searchView.addSubview(spacerView)
+        spacerView.translatesAutoresizingMaskIntoConstraints = false
+
+        searchView.addSubview(toTextField)
+        toTextField.translatesAutoresizingMaskIntoConstraints = false
 
         let hStack = UIStackView(arrangedSubviews: [difficultRoute, anywhere, weekend, hotTickets])
         hStack.axis = .horizontal
@@ -134,23 +143,29 @@ final class PopularDestinationsViewController: UIViewController {
             rectangle.widthAnchor.constraint(equalToConstant: 38),
 
             searchView.topAnchor.constraint(equalTo: rectangle.bottomAnchor, constant: 25),
-            searchView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            searchView.heightAnchor.constraint(equalToConstant: 96),
             searchView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
 
-            vStack.topAnchor.constraint(equalTo: searchView.topAnchor),
-            vStack.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
-            vStack.bottomAnchor.constraint(equalTo: searchView.bottomAnchor),
-            vStack.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 16),
+            airplaneImage.topAnchor.constraint(equalTo: searchView.topAnchor, constant: 16),
+            airplaneImage.widthAnchor.constraint(equalToConstant: 24),
+            airplaneImage.heightAnchor.constraint(equalToConstant: 24),
+            airplaneImage.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 16),
 
-            fromTextField.heightAnchor.constraint(equalToConstant: 45),
-            toTextField.heightAnchor.constraint(equalToConstant: 44),
-
-            searchImage.topAnchor.constraint(equalTo: searchView.topAnchor, constant: 33),
+            searchImage.topAnchor.constraint(equalTo: spacerView.bottomAnchor, constant: 8),
             searchImage.widthAnchor.constraint(equalToConstant: 24),
             searchImage.heightAnchor.constraint(equalToConstant: 24),
-            searchImage.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 8),
+            searchImage.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 16),
 
+            fromTextField.topAnchor.constraint(equalTo: searchView.topAnchor, constant: 16),
+            fromTextField.leadingAnchor.constraint(equalTo: airplaneImage.trailingAnchor, constant: 8),
+
+            toTextField.topAnchor.constraint(equalTo: spacerView.bottomAnchor, constant: 8),
+            toTextField.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 8),
+
+            spacerView.topAnchor.constraint(equalTo: searchView.topAnchor, constant: 48),
+            spacerView.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 16),
+            spacerView.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
             spacerView.heightAnchor.constraint(equalToConstant: 1),
 
             hStack.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 26),

@@ -14,8 +14,16 @@ final class Router {
     
     func presentTicketsOffersViewController(from vc: UIViewController, fromTextFielText: String) {
         let model = TicketsOffersModel(networkService: AppDelegate.networkService)
-         let viewModel = TicketsOffersViewModel(model: model, fromTextFieldText: fromTextFielText)
+        let viewModel = TicketsOffersViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFielText)
          let ticketsOffersVC = TicketsOffersViewController(viewModel: viewModel)
+        viewModel.ticketsOffersViewController = ticketsOffersVC
         vc.present(ticketsOffersVC, animated: true)
+    }
+
+    func presentAllTicketsViewController(from vc: UIViewController, fromTextFieldText: String) {
+        let model = AllTicketsModel(networkService: AppDelegate.networkService)
+        let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router)
+        let allTicketsVC = AllTicketsViewController(viewModel: viewModel)
+        vc.present(allTicketsVC, animated: true)
     }
 }

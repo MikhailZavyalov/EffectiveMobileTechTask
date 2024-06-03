@@ -214,8 +214,7 @@ final class TicketsOffersViewController: UIViewController {
 
     @objc 
     func goToAllTicketsScreen() {
-//        self.present(allTicketsVC, animated: true, completion: nil)
-
+        viewModel.seeAllTicketsButtonTap()
     }
 }
 

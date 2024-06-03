@@ -7,14 +7,22 @@ final class AllTicketsModel {
         self.networkService = networkService
     }
 
-    func loadTicketsOffers(completion: @escaping (Result<[TicketsOfferDTO], Error>) -> Void) {
-        networkService.fetchTicketsOffers { result in
+    func loadAllTickets(completion: @escaping (Result<[TicketDTO], Error>) -> Void) {
+        networkService.fetchTickets { result in
             switch result {
             case let .failure(error):
                 completion(.failure(error))
-            case let .success(ticketsOffersDTO):
-                completion(.success(ticketsOffersDTO.tickets_offers))
+            case let .success(allTicketsDTO):
+                completion(.success(allTicketsDTO.tickets))
             }
         }
+    }
+
+    func saveFromTextFieldLastValue(_ value: String?) {
+        UserDefaultsManager.setString(value, key: .fromTextFieldLastValue)
+    }
+
+    func loadCachedFromTextFieldLastValue() -> String? {
+        UserDefaultsManager.getString(key: .fromTextFieldLastValue)
     }
 }

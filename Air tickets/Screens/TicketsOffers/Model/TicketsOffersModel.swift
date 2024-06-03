@@ -17,5 +17,13 @@ final class TicketsOffersModel {
             }
         }
     }
+
+    func saveFromTextFieldLastValue(_ value: String?) {
+        UserDefaultsManager.setString(value, key: .fromTextFieldLastValue)
+    }
+
+    func loadCachedFromTextFieldLastValue() -> String? {
+        UserDefaultsManager.getString(key: .fromTextFieldLastValue)
+    }
 }
 
