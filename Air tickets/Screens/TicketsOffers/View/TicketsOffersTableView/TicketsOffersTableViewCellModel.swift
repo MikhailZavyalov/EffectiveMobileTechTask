@@ -2,8 +2,8 @@
 import Foundation
 
 struct TicketsOffersTableViewCellModel {
-    let image: String
+    let color: String
     let title: String
-    let timeRange: [String]
+    let timeRange: String
     let price: String
 }

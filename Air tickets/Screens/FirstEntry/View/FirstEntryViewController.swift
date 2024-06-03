@@ -93,6 +93,8 @@ class FirstEntryViewController: UIViewController {
         return view
     }()
 
+    private var textFieldDelegate: AirTicketsTextFieldDelegate?
+
     init(viewModel: FirstEntryViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -111,7 +113,11 @@ class FirstEntryViewController: UIViewController {
         setupConstraints()
         viewModel.loadData()
         toTextField.addTarget(self, action: #selector(toTextFieldTapped), for: .touchDown)
-        fromTextField.delegate = self
+        textFieldDelegate = AirTicketsTextFieldDelegate(onEditingEnd: { [weak self] in
+            guard let self else { return }
+            viewModel.fromTextFieldLastValue = fromTextField.text
+        })
+        fromTextField.delegate = textFieldDelegate
         fromTextField.text = viewModel.fromTextFieldLastValue
 
         collectionView.dataSource = self
@@ -194,6 +200,7 @@ class FirstEntryViewController: UIViewController {
     }
 
     @objc func toTextFieldTapped() {
+        viewModel.fromTextFieldLastValue = fromTextField.text
         viewModel.toTextFieldTapped()
     }
 }
@@ -243,10 +250,10 @@ extension FirstEntryViewController: UICollectionViewDelegateFlowLayout {
 extension FirstEntryViewController: UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        let cyrillicChars = CharacterSet(charactersIn: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя\n")
-//        if string.rangeOfCharacter(from: cyrillicChars.inverted) != nil {
-//            return false
-//        }
+        let cyrillicChars = CharacterSet(charactersIn: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя\n")
+        if string.rangeOfCharacter(from: cyrillicChars.inverted) != nil {
+            return false
+        }
         if string == "\n" {
             textField.resignFirstResponder()
             return false

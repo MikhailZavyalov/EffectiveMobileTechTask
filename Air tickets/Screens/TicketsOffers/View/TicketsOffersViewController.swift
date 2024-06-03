@@ -5,22 +5,6 @@ final class TicketsOffersViewController: UIViewController {
 
     private let viewModel: TicketsOffersViewModel
 
-    private let mockModels = [TicketsOffersTableViewCellModel(
-        image: "redCircle",
-        title: "Заглушка моковая",
-        timeRange: ["123", "456", "789"],
-        price: "300"),
-                              TicketsOffersTableViewCellModel(
-                                image: "redCircle",
-                                title: "Заглушка моковая",
-                                timeRange: ["123", "456", "789"],
-                                price: "300"),
-                              TicketsOffersTableViewCellModel(
-                                image: "redCircle",
-                                title: "Заглушка моковая",
-                                timeRange: ["123", "456", "789"],
-                                price: "300")]
-
     private var searchView: UIView = {
         var view = UIView()
         view.backgroundColor = UIColor(hexString: "2F3035")
@@ -33,44 +17,49 @@ final class TicketsOffersViewController: UIViewController {
         return view
     }()
 
-    private var searchImage: UIImageView = {
-        var image = UIImage(named: "search")
-        var view = UIImageView(image: image)
-        return view
+    private var backButton: UIButton = {
+        var image = UIImage(named: "backArrow")
+        var button = UIButton()
+        button.setImage(image, for: .normal)
+        return button
     }()
 
     private var fromTextField: UITextField = {
         var textField = UITextField()
         textField.font = .boldText16
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Откуда - Tbilisi",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
-        )
+        textField.textColor = .white
         return textField
     }()
 
     private var toTextField: UITextField = {
         var textField = UITextField()
         textField.font = .boldText16
-        textField.attributedPlaceholder = NSAttributedString(
-            string: "Куда - Krakow",
-            attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
-        )
-        textField.textColor = UIColor(hexString: "9F9F9F")
+        textField.textColor = .white
         return textField
     }()
 
-    private var spacerView: UIView = {
-        var spacer = UIView()
+    private let spacerView: UIView = {
+        let spacer = UIView()
         spacer.backgroundColor = UIColor(hexString: "9F9F9F9F")
         return spacer
+    }()
+
+    private let changeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "change"), for: .normal)
+        return button
+    }()
+
+    private let clearButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "clear"), for: .normal)
+        return button
     }()
 
     private var backButtonView = TicketsOffersFlightSettingsButton(
         image: "plus", text: "обратно"
     )
 
-//    private var dateButton = TicketsOffersFlightSettingsButton(image: "", text: "\(Date())")
     private var dateButton = TicketsOffersFlightSettingsButton(image: "", text: "24 фев, сб")
 
     private var numberOfPersonsButton = TicketsOffersFlightSettingsButton(
@@ -102,8 +91,7 @@ final class TicketsOffersViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         viewModel.$ticketsOffersModels.bind(executeInitially: true) { [weak self] models in
-            print("🍎", models)
-
+            self?.ticketsOffersTableView.reloadData()
         }
     }
 
@@ -118,7 +106,11 @@ final class TicketsOffersViewController: UIViewController {
         ticketsOffersTableView.dataSource = self
         ticketsOffersTableView.register(TicketsOffersTableViewCell.self, forCellReuseIdentifier: TicketsOffersTableViewCell.reuseID)
         viewModel.loadTicketsOffersData()
+        fromTextField.text = viewModel.fromTextFieldLastValue
         seeAllTicketsButton.addTarget(self, action: #selector(goToAllTicketsScreen), for: .touchUpInside)
+        clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
+        changeButton.addTarget(self, action: #selector(changeDestinationButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
 
         setupConstraints()
     }
@@ -127,8 +119,8 @@ final class TicketsOffersViewController: UIViewController {
         view.addSubview(searchView)
         searchView.translatesAutoresizingMaskIntoConstraints = false
 
-        searchView.addSubview(searchImage)
-        searchImage.translatesAutoresizingMaskIntoConstraints = false
+        searchView.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
 
         let vStack = UIStackView(arrangedSubviews: [fromTextField, spacerView, toTextField])
         vStack.axis = .vertical
@@ -138,6 +130,12 @@ final class TicketsOffersViewController: UIViewController {
         toTextField.translatesAutoresizingMaskIntoConstraints = false
 
         searchView.addSubview(vStack)
+
+        searchView.addSubview(changeButton)
+        changeButton.translatesAutoresizingMaskIntoConstraints = false
+
+        searchView.addSubview(clearButton)
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(backButtonView)
         backButtonView.translatesAutoresizingMaskIntoConstraints = false
@@ -166,15 +164,20 @@ final class TicketsOffersViewController: UIViewController {
             vStack.topAnchor.constraint(equalTo: searchView.topAnchor),
             vStack.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
             vStack.bottomAnchor.constraint(equalTo: searchView.bottomAnchor),
-            vStack.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 16),
+            vStack.leadingAnchor.constraint(equalTo: backButton.trailingAnchor, constant: 16),
 
             fromTextField.heightAnchor.constraint(equalToConstant: 45),
             toTextField.heightAnchor.constraint(equalToConstant: 44),
 
-            searchImage.topAnchor.constraint(equalTo: searchView.topAnchor, constant: 33),
-            searchImage.widthAnchor.constraint(equalToConstant: 24),
-            searchImage.heightAnchor.constraint(equalToConstant: 24),
-            searchImage.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 8),
+            backButton.centerYAnchor.constraint(equalTo: searchView.centerYAnchor, constant: 0),
+            backButton.widthAnchor.constraint(equalToConstant: 24),
+            backButton.heightAnchor.constraint(equalToConstant: 24),
+            backButton.leadingAnchor.constraint(equalTo: searchView.leadingAnchor, constant: 8),
+
+            changeButton.bottomAnchor.constraint(equalTo: spacerView.topAnchor, constant: -8),
+            changeButton.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
+            changeButton.heightAnchor.constraint(equalToConstant: 24),
+            changeButton.widthAnchor.constraint(equalToConstant: 24),
 
             spacerView.heightAnchor.constraint(equalToConstant: 1),
 
@@ -198,13 +201,17 @@ final class TicketsOffersViewController: UIViewController {
             filtersButton.widthAnchor.constraint(equalToConstant: 104),
             filtersButton.heightAnchor.constraint(equalToConstant: 33),
 
+            clearButton.topAnchor.constraint(equalTo: spacerView.bottomAnchor, constant: 8),
+            clearButton.trailingAnchor.constraint(equalTo: searchView.trailingAnchor, constant: -16),
+            clearButton.heightAnchor.constraint(equalToConstant: 24),
+            clearButton.widthAnchor.constraint(equalToConstant: 24),
+
             ticketsOffersTableView.topAnchor.constraint(equalTo: backButtonView.bottomAnchor, constant: 15),
             ticketsOffersTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            ticketsOffersTableView.heightAnchor.constraint(equalToConstant: 218),
             ticketsOffersTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            ticketsOffersTableView.heightAnchor.constraint(equalToConstant: 216),
 
             seeAllTicketsButton.topAnchor.constraint(equalTo: ticketsOffersTableView.bottomAnchor, constant: 18),
-            seeAllTicketsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             seeAllTicketsButton.heightAnchor.constraint(equalToConstant: 42),
             seeAllTicketsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             seeAllTicketsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -216,6 +223,25 @@ final class TicketsOffersViewController: UIViewController {
     func goToAllTicketsScreen() {
         viewModel.seeAllTicketsButtonTap()
     }
+
+    @objc 
+    func clearText() {
+        toTextField.text = ""
+    }
+
+    @objc
+    func changeDestinationButtonTapped() {
+        let to = toTextField.text
+        let from = fromTextField.text
+
+        toTextField.text = from
+        fromTextField.text = to
+    }
+
+    @objc
+    func backButtonTapped() {
+        self.dismiss(animated: true)
+    }
 }
 
 extension TicketsOffersViewController: UITableViewDelegate {
@@ -225,13 +251,17 @@ extension TicketsOffersViewController: UITableViewDelegate {
 extension TicketsOffersViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3//viewModel.ticketsOffersModels.count
+        viewModel.ticketsOffersModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ticketsOffersTableView.dequeueReusableCell(withIdentifier: TicketsOffersTableViewCell.reuseID, for: indexPath)
         guard let ticketsOfferCell = cell as? TicketsOffersTableViewCell else { return cell }
-        ticketsOfferCell.configure(with: mockModels[indexPath.row])
+        ticketsOfferCell.configure(
+            with: viewModel.ticketsOffersModels[indexPath.row],
+            isFirst: indexPath.row == 0,
+            isLast: indexPath.row == viewModel.ticketsOffersModels.count - 1
+        )
         return ticketsOfferCell
     }
 }

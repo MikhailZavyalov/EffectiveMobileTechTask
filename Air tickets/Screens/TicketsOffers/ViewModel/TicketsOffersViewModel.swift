@@ -48,10 +48,15 @@ final class TicketsOffersViewModel {
 
 private extension TicketsOffersTableViewCellModel {
     init(ticketsOfferDTO: TicketsOfferDTO) {
-        image = String(ticketsOfferDTO.id)
+        color = colorsMap[ticketsOfferDTO.id, default: "FFFFFF"]
         title = ticketsOfferDTO.title
-        timeRange = ticketsOfferDTO.time_range
+        timeRange = ticketsOfferDTO.time_range.joined(separator: " ")
         price = "\(ticketsOfferDTO.price.value)"
     }
 }
 
+private let colorsMap: [Int: String] = [
+    1: "FF5E5E",
+    10: "2261BC",
+    30: "FFFFFF"
+]

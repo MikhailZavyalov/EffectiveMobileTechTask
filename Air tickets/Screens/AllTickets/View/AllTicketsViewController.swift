@@ -34,7 +34,6 @@ final class AllTicketsViewController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .black
         tableView.separatorStyle = .none
-        tableView.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0)
         return tableView
     }()
 
@@ -57,7 +56,6 @@ final class AllTicketsViewController: UIViewController {
         allTicketsTableView.dataSource = self
         allTicketsTableView.register(AllTicketsTableViewCell.self, forCellReuseIdentifier: AllTicketsTableViewCell.reuseID)
         viewModel.$allTicketsModels.bind(executeInitially: true) { [weak self] models in
-            print("🍎", #function, models)
             self?.allTicketsTableView.reloadData()
         }
         returnButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)

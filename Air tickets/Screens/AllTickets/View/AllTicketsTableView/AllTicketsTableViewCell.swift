@@ -61,6 +61,7 @@ final class AllTicketsTableViewCell: UITableViewCell {
         contentView.layer.cornerRadius = 16
         backgroundColor = .clear
         selectionStyle = .none
+        layer.masksToBounds = true
 
         setupConstraints()
     }

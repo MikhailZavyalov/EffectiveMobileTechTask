@@ -117,6 +117,7 @@ final class PopularDestinationsViewController: UIViewController {
     }()
 
     private let viewModel: PopularDestinationsViewModel
+    private var textFieldDelegate: AirTicketsTextFieldDelegate?
 
     init(viewModel: PopularDestinationsViewModel) {
         self.viewModel = viewModel
@@ -134,13 +135,18 @@ final class PopularDestinationsViewController: UIViewController {
         popularDestinationsTableView.delegate = self
         popularDestinationsTableView.register(PopularDestinationsTableViewCell.self, forCellReuseIdentifier: PopularDestinationsTableViewCell.reuseID)
         fromTextField.text = viewModel.fromTextFieldText
+        textFieldDelegate = AirTicketsTextFieldDelegate(onEditingEnd: { [weak self] in
+            guard let self else { return }
+            viewModel.toTextFieldLastValue = toTextField.text
+        })
+        toTextField.delegate = textFieldDelegate
         toTextField.addTarget(self, action: #selector(textFieldEditingEnd), for: .editingDidEnd)
 
         clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
 
-        difficultRoute.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
-        weekend.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
-        hotTickets.addTarget(self, action: #selector(goToStubScreen), for: .touchUpInside)
+        difficultRoute.addTarget(self, action: #selector(quickSearchButtonTapped), for: .touchUpInside)
+        weekend.addTarget(self, action: #selector(quickSearchButtonTapped), for: .touchUpInside)
+        hotTickets.addTarget(self, action: #selector(quickSearchButtonTapped), for: .touchUpInside)
         anywhere.addTarget(self, action: #selector(printAnywhere), for: .touchUpInside)
 
         setupConstraints()
@@ -152,8 +158,8 @@ final class PopularDestinationsViewController: UIViewController {
     }
 
     @objc 
-    func goToStubScreen() {
-
+    func quickSearchButtonTapped() {
+        viewModel.quickSearchButtonTapped()
     }
 
     @objc
@@ -290,21 +296,11 @@ final class PopularDestinationsViewController: UIViewController {
 }
 
 extension PopularDestinationsViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        UIView()
-//    }
-//
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        UIView()
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        20
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        20
-//    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let city = viewModel.cellModels[indexPath.row].title
+        toTextField.text = city
+    }
 }
 
 extension PopularDestinationsViewController: UITableViewDataSource {

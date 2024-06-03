@@ -24,6 +24,7 @@
 		C10959882C0CB6CD0036CCEB /* PopularDestinationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10959872C0CB6CD0036CCEB /* PopularDestinationsModel.swift */; };
 		C109598A2C0D07D80036CCEB /* AllTicketsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10959892C0D07D80036CCEB /* AllTicketsDTO.swift */; };
 		C109598C2C0DEBB50036CCEB /* StubScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C109598B2C0DEBB50036CCEB /* StubScreen.swift */; };
+		C109598E2C0E0E750036CCEB /* AirTicketsTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C109598D2C0E0E750036CCEB /* AirTicketsTextFieldDelegate.swift */; };
 		C10DE6A12C05E57C0086F816 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A02C05E57C0086F816 /* AppDelegate.swift */; };
 		C10DE6A52C05E57C0086F816 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A42C05E57C0086F816 /* SceneDelegate.swift */; };
 		C10DE6A72C05E57C0086F816 /* FirstEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE6A62C05E57C0086F816 /* FirstEntryViewController.swift */; };
@@ -85,6 +86,7 @@
 		C10959872C0CB6CD0036CCEB /* PopularDestinationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularDestinationsModel.swift; sourceTree = "<group>"; };
 		C10959892C0D07D80036CCEB /* AllTicketsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTicketsDTO.swift; sourceTree = "<group>"; };
 		C109598B2C0DEBB50036CCEB /* StubScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubScreen.swift; sourceTree = "<group>"; };
+		C109598D2C0E0E750036CCEB /* AirTicketsTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirTicketsTextFieldDelegate.swift; sourceTree = "<group>"; };
 		C10DE69D2C05E57C0086F816 /* Air tickets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Air tickets.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10DE6A02C05E57C0086F816 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C10DE6A42C05E57C0086F816 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -418,6 +420,7 @@
 				C1D5B4602C08AB01002317CF /* UICollectionViewCell + ReuseID.swift */,
 				C1D5B4642C08CE36002317CF /* CollectionViewScroll.swift */,
 				C10959812C0C8F020036CCEB /* UserDefaultsManager.swift */,
+				C109598D2C0E0E750036CCEB /* AirTicketsTextFieldDelegate.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				C10DE6D72C06004C0086F816 /* Colors.swift in Sources */,
 				C10959652C0A1B650036CCEB /* TicketsOffersViewController.swift in Sources */,
 				C10DE6A72C05E57C0086F816 /* FirstEntryViewController.swift in Sources */,
+				C109598E2C0E0E750036CCEB /* AirTicketsTextFieldDelegate.swift in Sources */,
 				C10DE6D22C05EC570086F816 /* TabBarController.swift in Sources */,
 				C10DE6A52C05E57C0086F816 /* SceneDelegate.swift in Sources */,
 				C10DE6F72C064E7F0086F816 /* FirstEntryViewModel.swift in Sources */,

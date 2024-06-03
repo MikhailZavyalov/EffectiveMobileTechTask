@@ -17,6 +17,8 @@ final class Router {
         let viewModel = TicketsOffersViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFielText)
          let ticketsOffersVC = TicketsOffersViewController(viewModel: viewModel)
         viewModel.ticketsOffersViewController = ticketsOffersVC
+        ticketsOffersVC.modalTransitionStyle = .coverVertical
+        ticketsOffersVC.modalPresentationStyle = .fullScreen
         vc.present(ticketsOffersVC, animated: true)
     }
 
@@ -24,6 +26,13 @@ final class Router {
         let model = AllTicketsModel(networkService: AppDelegate.networkService)
         let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router)
         let allTicketsVC = AllTicketsViewController(viewModel: viewModel)
+        allTicketsVC.modalTransitionStyle = .coverVertical
+        allTicketsVC.modalPresentationStyle = .fullScreen
         vc.present(allTicketsVC, animated: true)
+    }
+
+    func presentStubViewController(from vc: UIViewController) {
+        let controller = StubScreen()
+        vc.present(controller, animated: true)
     }
 }

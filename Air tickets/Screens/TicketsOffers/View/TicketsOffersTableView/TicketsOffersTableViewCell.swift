@@ -3,12 +3,12 @@ import UIKit
 
 final class TicketsOffersTableViewCell: UITableViewCell {
 
-    private let image: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 12
-        imageView.layer.masksToBounds = true
-        imageView.backgroundColor = UIColor.init(hexString: "FF5E5E")
-        return imageView
+    private let image: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = true
+        view.backgroundColor = UIColor.init(hexString: "FF5E5E")
+        return view
     }()
 
     private let titleLabel: UILabel = {
@@ -19,13 +19,10 @@ final class TicketsOffersTableViewCell: UITableViewCell {
         return title
     }()
 
-    private var textForSubtitleLabel: [String] = []
-
     private let subTitleLabel: UILabel = {
         let subTitleLabel = UILabel()
-        subTitleLabel.textColor = UIColor.init(hexString: "5E5F61")
+        subTitleLabel.textColor = UIColor.white
         subTitleLabel.font = UIFont.regular14
-        subTitleLabel.text = "07:00,  09:10,   10:00  11:00  12:00  13:00  12:00      "
         return subTitleLabel
     }()
 
@@ -33,7 +30,6 @@ final class TicketsOffersTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.regular14
         label.textColor = UIColor.init(hexString: "2261BC")
-        label.text = "300"
         return label
     }()
 
@@ -51,10 +47,14 @@ final class TicketsOffersTableViewCell: UITableViewCell {
         return separator
     }()
 
+    private var topConstraint: NSLayoutConstraint?
+    private var bottomConstraint: NSLayoutConstraint?
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.heightAnchor.constraint(equalToConstant: 75).isActive = true
         contentView.backgroundColor = UIColor.init(hexString: "1D1E20")
+        backgroundColor = .clear
         selectionStyle = .none
 
         setupConstraints()
@@ -64,12 +64,24 @@ final class TicketsOffersTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with model: TicketsOffersTableViewCellModel) {
-        image.image = UIImage(named: model.image)
+    func configure(with model: TicketsOffersTableViewCellModel, isFirst: Bool, isLast: Bool) {
+        image.backgroundColor = UIColor(hexString: model.color)
         titleLabel.text = model.title
-        textForSubtitleLabel = model.timeRange
-        subTitleLabel.text = "\(textForSubtitleLabel)"
+        subTitleLabel.text = model.timeRange
         priceLabel.text = model.price
+
+        topConstraint?.constant = isFirst ? 24 : 16
+        bottomConstraint?.constant = isLast ? -16 : 0
+
+        contentView.layer.maskedCorners = []
+        if isFirst {
+            contentView.layer.maskedCorners.insert(.layerMinXMinYCorner)
+            contentView.layer.maskedCorners.insert(.layerMaxXMinYCorner)
+        }
+        if isLast {
+            contentView.layer.maskedCorners.insert(.layerMinXMaxYCorner)
+            contentView.layer.maskedCorners.insert(.layerMaxXMaxYCorner)
+        }
     }
 
     private func setupConstraints() {
@@ -86,27 +98,38 @@ final class TicketsOffersTableViewCell: UITableViewCell {
         contentView.addSubview(separator)
         separator.translatesAutoresizingMaskIntoConstraints = false
 
+        topConstraint = image.topAnchor.constraint(
+            equalTo: contentView.topAnchor,
+            constant: 16
+        )
+
+        bottomConstraint = separator.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: 0
+        )
+
         let constraints = [
-            image.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topConstraint!,
+            image.bottomAnchor.constraint(equalTo: separator.topAnchor, constant: -20),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             image.heightAnchor.constraint(equalToConstant: 24),
             image.widthAnchor.constraint(equalToConstant: 24),
 
-            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: image.topAnchor, constant: 0),
             titleLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 8),
 
-            subTitleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25),
+            subTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
             subTitleLabel.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 8),
 
-            rightArrow.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            rightArrow.topAnchor.constraint(equalTo: image.topAnchor, constant: 0),
             rightArrow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -27),
             rightArrow.widthAnchor.constraint(equalToConstant: 16),
             rightArrow.heightAnchor.constraint(equalToConstant: 16),
 
-            priceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            priceLabel.topAnchor.constraint(equalTo: image.topAnchor, constant: 0),
             priceLabel.trailingAnchor.constraint(equalTo: rightArrow.leadingAnchor),
 
-            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            bottomConstraint!,
             separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
         ]
