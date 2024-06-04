@@ -6,7 +6,7 @@ final class BlankScreenViewController: UIViewController {
     private var blankTitle: UILabel = {
         let label = UILabel()
         label.text = "Something"
-        label.font = .title1
+        label.font = .boldText22
         label.textAlignment = .center
         label.textColor = .white
         return label

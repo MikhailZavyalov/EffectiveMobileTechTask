@@ -60,7 +60,16 @@ final class TicketsOffersViewController: UIViewController {
         image: "plus", text: "обратно"
     )
 
-    private var dateButton = TicketsOffersFlightSettingsButton(image: "", text: "24 фев, сб")
+    private var dateButton = TicketsOffersFlightSettingsButton(image: nil, text: "24 фев, сб")
+
+    private var datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .wheels
+        picker.backgroundColor = .white
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        return picker
+    }()
 
     private var numberOfPersonsButton = TicketsOffersFlightSettingsButton(
         image: "person", text: "1,эконом"

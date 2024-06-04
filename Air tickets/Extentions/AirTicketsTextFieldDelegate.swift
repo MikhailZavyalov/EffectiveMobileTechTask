@@ -10,10 +10,10 @@ final class AirTicketsTextFieldDelegate: NSObject, UITextFieldDelegate {
     }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        //        let cyrillicChars = CharacterSet(charactersIn: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя\n")
-        //        if string.rangeOfCharacter(from: cyrillicChars.inverted) != nil {
-        //            return false
-        //        }
+                let cyrillicChars = CharacterSet(charactersIn: "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя\n")
+                if string.rangeOfCharacter(from: cyrillicChars.inverted) != nil {
+                    return false
+                }
         if string == "\n" {
             textField.resignFirstResponder()
             return false
