@@ -18,7 +18,7 @@ class FirstEntryViewController: UIViewController {
         let label = UILabel()
         label.text = "Поиск дешевых\n авиабилетов"
         label.numberOfLines = 2
-        label.font = .title1
+        label.font = .boldText22
         label.textAlignment = .center
         label.textColor = .white
         return label
@@ -80,7 +80,7 @@ class FirstEntryViewController: UIViewController {
 
     private var flyAwayMusicallyLabel: UILabel = {
         var label = UILabel()
-        label.font = .title1
+        label.font = .boldText22
         label.text = "Музыкально отлететь"
         label.textColor = .white
         return label

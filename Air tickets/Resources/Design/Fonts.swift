@@ -4,7 +4,7 @@ import UIKit
 extension UIFont {
 
     // Title Fonts
-    static var title1 = UIFont.systemFont(ofSize: 22, weight: .bold)
+    static var boldText22 = UIFont.systemFont(ofSize: 22, weight: .bold)
     static var boldText16 = UIFont.systemFont(ofSize: 16, weight: .bold)
     static var regular14 = UIFont.systemFont(ofSize: 14, weight: .regular)
     static var headline4 = UIFont.systemFont(ofSize: 20, weight: .bold)

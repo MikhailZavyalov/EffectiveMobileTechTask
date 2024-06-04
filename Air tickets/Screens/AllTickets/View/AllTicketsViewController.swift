@@ -34,6 +34,7 @@ final class AllTicketsViewController: UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .black
         tableView.separatorStyle = .none
+        tableView.layer.masksToBounds = true
         return tableView
     }()
 
@@ -122,11 +123,8 @@ extension AllTicketsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = allTicketsTableView.dequeueReusableCell(withIdentifier: AllTicketsTableViewCell.reuseID, for: indexPath)
         guard let settingsCell = cell as? AllTicketsTableViewCell else { return cell }
+        settingsCell.containerView.backgroundColor = UIColor(hexString: "1D1E20")
         settingsCell.configure(with: viewModel.allTicketsModels[indexPath.row])
         return settingsCell
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        119
     }
 }

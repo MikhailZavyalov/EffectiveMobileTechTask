@@ -3,24 +3,35 @@ import UIKit
 
 final class TicketsOffersFlightSettingsButton: UIView {
 
-    init(image: String?, text: String){
-        let button = UIButton()
-        button.backgroundColor = UIColor.init(hexString: "2F3035")
-        button.layer.cornerRadius = 16
+    init(image: String? = nil, text: String){
 
-        let imageView = UIImageView()
+        let button: UIButton = {
+            let button = UIButton()
+            button.backgroundColor = UIColor.init(hexString: "2F3035")
+            button.layer.cornerRadius = 16
+            return button
+        }()
 
-        let textLabel = UILabel()
-        textLabel.text = text
-        textLabel.textColor = .white
-        textLabel.font = UIFont.regular14
+
+        let imageView: UIImageView = {
+            let imageView = UIImageView()
+            return imageView
+        }()
+
+        let textLabel: UILabel = {
+            let textLabel = UILabel()
+            textLabel.text = text
+            textLabel.textColor = .white
+            textLabel.font = UIFont.regular14
+            return textLabel
+        }()
 
         super.init(frame: .zero)
 
         self.backgroundColor = UIColor.init(hexString: "2F3035")
         self.layer.cornerRadius = 50
 
-        if image != "" {
+        if image != nil {
             addSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
 

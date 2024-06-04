@@ -3,17 +3,30 @@ import UIKit
 
 final class AllTicketsTableViewCell: UITableViewCell {
 
+    let containerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = false
+        return view
+    }()
+
     private let badge: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.layer.cornerRadius = 50
+        label.layer.cornerRadius = 8
+        label.layer.masksToBounds = true
         label.backgroundColor = UIColor(hexString: "#2261BC")
+        label.font = UIFont.regular14
+        label.textAlignment = .center
         return label
     }()
 
     private let price: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.boldText22
         return label
     }()
 
@@ -28,40 +41,45 @@ final class AllTicketsTableViewCell: UITableViewCell {
     private let departureAndArrivalTime: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.regular14
         return label
     }()
 
     private let flightTime: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.regular14
         return label
     }()
 
     private let noTransfers: UILabel = {
         let label = UILabel()
         label.textColor = .white
+        label.font = UIFont.regular14
         return label
     }()
 
     private let departureAirport: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(hexString: "9F9F9F")
+        label.font = UIFont.regular14
         return label
     }()
 
     private let arrivalAirport: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(hexString: "9F9F9F")
+        label.font = UIFont.regular14
         return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = UIColor.init(hexString: "1D1E20")
+        contentView.backgroundColor = .clear
         contentView.layer.cornerRadius = 16
         backgroundColor = .clear
         selectionStyle = .none
-        layer.masksToBounds = true
+        layer.masksToBounds = false
 
         setupConstraints()
     }
@@ -73,7 +91,7 @@ final class AllTicketsTableViewCell: UITableViewCell {
 
     func configure(with model: AllTicketsTableViewCellModel) {
         badge.text = model.badge
-        price.text = model.price
+        price.text = model.price + " ₽"
         departureAndArrivalTime.text = "\(model.departureTime)-\(model.arrivalTime)"
         flightTime.text = model.flightTime
         noTransfers.text = model.noTransfers
@@ -82,40 +100,49 @@ final class AllTicketsTableViewCell: UITableViewCell {
     }
 
     private func setupConstraints() {
-        contentView.addSubview(badge)
+        contentView.addSubview(containerView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+
+        containerView.addSubview(badge)
         badge.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(price)
+        containerView.addSubview(price)
         price.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(image)
+        containerView.addSubview(image)
         image.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(departureAndArrivalTime)
+        containerView.addSubview(departureAndArrivalTime)
         departureAndArrivalTime.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(flightTime)
+        containerView.addSubview(flightTime)
         flightTime.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(noTransfers)
+        containerView.addSubview(noTransfers)
         noTransfers.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(departureAirport)
+        containerView.addSubview(departureAirport)
         departureAirport.translatesAutoresizingMaskIntoConstraints = false
 
-        contentView.addSubview(arrivalAirport)
+        containerView.addSubview(arrivalAirport)
         arrivalAirport.translatesAutoresizingMaskIntoConstraints = false
 
         let constraints = [
-            badge.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8),
-            badge.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            badge.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -104),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
 
-            price.topAnchor.constraint(equalTo: badge.bottomAnchor, constant: 8),
-            price.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            badge.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -8),
+            badge.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            badge.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -104),
+
+            price.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 16),
+            price.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            price.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -77),
 
             image.topAnchor.constraint(equalTo: price.bottomAnchor, constant: 23),
-            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            image.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             image.heightAnchor.constraint(equalToConstant: 24),
             image.widthAnchor.constraint(equalToConstant: 24),
 
