@@ -47,7 +47,7 @@ final class PopularDestinationsViewController: UIViewController {
             string: "Куда - Турция",
             attributes: [NSAttributedString.Key.foregroundColor: UIColor(hexString: "9F9F9F")]
         )
-        textField.textColor = UIColor(hexString: "9F9F9F")
+        textField.textColor = UIColor.white
         return textField
     }()
 
@@ -138,9 +138,9 @@ final class PopularDestinationsViewController: UIViewController {
         textFieldDelegate = AirTicketsTextFieldDelegate(onEditingEnd: { [weak self] in
             guard let self else { return }
             viewModel.toTextFieldLastValue = toTextField.text
+            viewModel.textFieldEditingEnd()
         })
         toTextField.delegate = textFieldDelegate
-        toTextField.addTarget(self, action: #selector(textFieldEditingEnd), for: .editingDidEnd)
 
         clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
 
@@ -150,11 +150,6 @@ final class PopularDestinationsViewController: UIViewController {
         anywhere.addTarget(self, action: #selector(printAnywhere), for: .touchUpInside)
 
         setupConstraints()
-    }
-
-    @objc
-    func textFieldEditingEnd() {
-        viewModel.textFieldEditingEnd()
     }
 
     @objc 

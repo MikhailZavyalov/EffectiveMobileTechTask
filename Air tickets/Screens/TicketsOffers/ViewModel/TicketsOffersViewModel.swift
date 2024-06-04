@@ -7,16 +7,16 @@ final class TicketsOffersViewModel {
     private let model: TicketsOffersModel
     private let router: Router
 
-    let fromTextFieldText: String
     var fromTextFieldLastValue: String?
+    var toTextFieldLastValue: String?
 
     weak var ticketsOffersViewController: TicketsOffersViewController?
 
-    init(model: TicketsOffersModel, router: Router, fromTextFieldText: String) {
+    init(model: TicketsOffersModel, router: Router, fromTextFieldText: String, toTextFieldText: String) {
         self.model = model
         self.router = router
-        self.fromTextFieldText = fromTextFieldText
-        fromTextFieldLastValue = model.loadCachedFromTextFieldLastValue()
+        fromTextFieldLastValue = fromTextFieldText
+        toTextFieldLastValue = toTextFieldText
     }
 
     func loadTicketsOffersData() {
@@ -40,9 +40,11 @@ final class TicketsOffersViewModel {
         guard
             let ticketsOffersViewController,
             let fromTextFieldLastValue,
-            !fromTextFieldLastValue.isEmpty
+            !fromTextFieldLastValue.isEmpty,
+            let toTextFieldLastValue,
+            !toTextFieldLastValue.isEmpty
         else { return }
-        router.presentAllTicketsViewController(from: ticketsOffersViewController, fromTextFieldText: fromTextFieldLastValue)
+        router.presentAllTicketsViewController(from: ticketsOffersViewController, fromTextFieldText: fromTextFieldLastValue, toTextFieldText: toTextFieldLastValue)
     }
 }
 

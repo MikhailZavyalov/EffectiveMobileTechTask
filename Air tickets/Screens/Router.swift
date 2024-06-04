@@ -12,9 +12,9 @@ final class Router {
         vc.present(popularDestinationsVC, animated: true)
     }
     
-    func presentTicketsOffersViewController(from vc: UIViewController, fromTextFielText: String) {
+    func presentTicketsOffersViewController(from vc: UIViewController, fromTextFielText: String, toTextFieldText: String) {
         let model = TicketsOffersModel(networkService: AppDelegate.networkService)
-        let viewModel = TicketsOffersViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFielText)
+        let viewModel = TicketsOffersViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFielText, toTextFieldText: toTextFieldText)
          let ticketsOffersVC = TicketsOffersViewController(viewModel: viewModel)
         viewModel.ticketsOffersViewController = ticketsOffersVC
         ticketsOffersVC.modalTransitionStyle = .coverVertical
@@ -22,9 +22,9 @@ final class Router {
         vc.present(ticketsOffersVC, animated: true)
     }
 
-    func presentAllTicketsViewController(from vc: UIViewController, fromTextFieldText: String) {
+    func presentAllTicketsViewController(from vc: UIViewController, fromTextFieldText: String, toTextFieldText: String) {
         let model = AllTicketsModel(networkService: AppDelegate.networkService)
-        let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router)
+        let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFieldText, toTextFieldText: toTextFieldText)
         let allTicketsVC = AllTicketsViewController(viewModel: viewModel)
         allTicketsVC.modalTransitionStyle = .coverVertical
         allTicketsVC.modalPresentationStyle = .fullScreen

@@ -60,6 +60,7 @@ final class AllTicketsViewController: UIViewController {
             self?.allTicketsTableView.reloadData()
         }
         returnButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        cities.text = "\(viewModel.fromTextFieldText)-\(viewModel.toTextFieldText)"
 
         setupConstraints()
     }

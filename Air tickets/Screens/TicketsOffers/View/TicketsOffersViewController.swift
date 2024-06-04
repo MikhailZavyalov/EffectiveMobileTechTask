@@ -116,6 +116,7 @@ final class TicketsOffersViewController: UIViewController {
         ticketsOffersTableView.register(TicketsOffersTableViewCell.self, forCellReuseIdentifier: TicketsOffersTableViewCell.reuseID)
         viewModel.loadTicketsOffersData()
         fromTextField.text = viewModel.fromTextFieldLastValue
+        toTextField.text = viewModel.toTextFieldLastValue
         seeAllTicketsButton.addTarget(self, action: #selector(goToAllTicketsScreen), for: .touchUpInside)
         clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
         changeButton.addTarget(self, action: #selector(changeDestinationButtonTapped), for: .touchUpInside)
@@ -236,6 +237,7 @@ final class TicketsOffersViewController: UIViewController {
     @objc 
     func clearText() {
         toTextField.text = ""
+        viewModel.toTextFieldLastValue = ""
     }
 
     @objc
@@ -245,6 +247,8 @@ final class TicketsOffersViewController: UIViewController {
 
         toTextField.text = from
         fromTextField.text = to
+        viewModel.toTextFieldLastValue = from
+        viewModel.fromTextFieldLastValue = to
     }
 
     @objc

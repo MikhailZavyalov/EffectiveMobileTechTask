@@ -4,19 +4,17 @@ final class AllTicketsViewModel {
     @Observable
     var allTicketsModels: [AllTicketsTableViewCellModel] = []
 
-    var fromTextFieldLastValue: String? {
-        didSet {
-            model.saveFromTextFieldLastValue(fromTextFieldLastValue)
-        }
-    }
+    var fromTextFieldText: String
+    var toTextFieldText: String
 
     private let model: AllTicketsModel
     private let router: Router
 
-    init(model: AllTicketsModel, router: Router) {
+    init(model: AllTicketsModel, router: Router, fromTextFieldText: String, toTextFieldText: String) {
         self.model = model
         self.router = router
-        fromTextFieldLastValue = model.loadCachedFromTextFieldLastValue()
+        self.fromTextFieldText = fromTextFieldText
+        self.toTextFieldText = toTextFieldText
     }
 
     func loadData() {

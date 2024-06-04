@@ -5,11 +5,18 @@ final class PopularDestinationsViewModel {
 
     let cellModels: [PopularDestinationsTableViewCellModel]
     weak var popularDestinationsViewController: PopularDestinationsViewController?
+
+//    var fromTextFieldLastValue: String? {
+//        didSet {
+//            model.saveFromTextFieldLastValue(fromTextFieldLastValue)
+//        }
+//    }
     var toTextFieldLastValue: String? {
         didSet {
             model.saveToTextFieldLastValue(toTextFieldLastValue)
         }
     }
+    
     let fromTextFieldText: String
 
     private let model: PopularDestinationsModel
@@ -19,7 +26,7 @@ final class PopularDestinationsViewModel {
         self.model = model
         cellModels = model.mockData.map { PopularDestinationsTableViewCellModel(image: $0.image, title: $0.title) }
         self.fromTextFieldText = fromTextFieldText
-        toTextFieldLastValue = model.loadCachedToTextFieldLastValue()
+//        toTextFieldLastValue = model.loadCachedToTextFieldLastValue()
         self.router = router
     }
 
@@ -31,7 +38,7 @@ final class PopularDestinationsViewModel {
         else { return }
         router.presentTicketsOffersViewController(
             from: popularDestinationsViewController,
-            fromTextFielText: toTextFieldLastValue
+            fromTextFielText: fromTextFieldText, toTextFieldText: toTextFieldLastValue
         )
     }
 

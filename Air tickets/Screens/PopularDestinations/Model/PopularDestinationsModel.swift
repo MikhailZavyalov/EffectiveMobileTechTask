@@ -8,11 +8,12 @@ final class PopularDestinationsModel {
         (image: "phuket", title: "Пхукет"),
     ]
 
-    func loadCachedToTextFieldLastValue() -> String? {
-        UserDefaultsManager.getString(key: .toTextFieldLastValue)
-    }
-
     func saveToTextFieldLastValue(_ value: String?) {
         UserDefaultsManager.setString(value, key: .toTextFieldLastValue)
     }
+
+    func loadCachedToTextFieldLastValue() -> String? {
+        UserDefaultsManager.getString(key: .toTextFieldLastValue)
+    }
 }
+
