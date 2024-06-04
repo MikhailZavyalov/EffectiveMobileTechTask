@@ -14,10 +14,10 @@ final class PopularDestinationsViewController: UIViewController {
         view.backgroundColor = UIColor(hexString: "2F3035")
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = false
-        view.layer.shadowOpacity = 1
-        view.layer.shadowRadius = 5
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        view.layer.shadowOpacity = 0.25
+        view.layer.shadowRadius = 5
+        view.layer.shadowOffset = CGSize(width: 0, height: 5)
         return view
     }()
 

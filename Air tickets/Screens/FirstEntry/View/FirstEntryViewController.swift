@@ -36,10 +36,11 @@ class FirstEntryViewController: UIViewController {
         view.backgroundColor = UIColor(hexString: "3E3F43")
         view.layer.cornerRadius = 16
         view.layer.masksToBounds = false
-        view.layer.shadowOpacity = 1
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.25
         view.layer.shadowRadius = 5
-        view.layer.shadowColor = UIColor.black.cgColor //UIColor(named: "shadowColor")?.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        view.layer.shadowOffset = CGSize(width: 0, height: 5)
+
         return view
     }()
 
