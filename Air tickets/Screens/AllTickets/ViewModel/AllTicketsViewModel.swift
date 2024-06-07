@@ -6,15 +6,17 @@ final class AllTicketsViewModel {
 
     var fromTextFieldText: String
     var toTextFieldText: String
+    var textFromDatePicker: String
 
     private let model: AllTicketsModel
     private let router: Router
 
-    init(model: AllTicketsModel, router: Router, fromTextFieldText: String, toTextFieldText: String) {
+    init(model: AllTicketsModel, router: Router, fromTextFieldText: String, toTextFieldText: String, textFromDatePicker: String) {
         self.model = model
         self.router = router
         self.fromTextFieldText = fromTextFieldText
         self.toTextFieldText = toTextFieldText
+        self.textFromDatePicker = textFromDatePicker
     }
 
     func loadData() {

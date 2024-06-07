@@ -60,22 +60,35 @@ final class TicketsOffersViewController: UIViewController {
         image: "plus", text: "обратно"
     )
 
-    private var dateButton = TicketsOffersFlightSettingsButton(image: nil, text: "24 фев, сб")
-
     private var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
-        picker.datePickerMode = .date
-        picker.preferredDatePickerStyle = .wheels
-        picker.backgroundColor = .white
         picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .compact
+        picker.layer.cornerRadius = 16
+        picker.layer.masksToBounds = true
+        picker.backgroundColor = UIColor.init(hexString: "2F3035")
         return picker
+    }()
+
+    private let dateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.backgroundColor = UIColor.init(hexString: "2F3035")
+        label.textColor = .white
+        label.font = UIFont.regular14
+        return label
     }()
 
     private var numberOfPersonsButton = TicketsOffersFlightSettingsButton(
         image: "person", text: "1,эконом"
     )
 
-    private var filtersButton = TicketsOffersFlightSettingsButton(image: "filters", text: "фильтр")
+    private let filtersButton: TicketsOffersFlightSettingsButton = {
+        let button = TicketsOffersFlightSettingsButton(image: "filters", text: "фильтр")
+        return button
+    }()
 
     private let ticketsOffersTableView: UITableView = {
         let tableView = UITableView()
@@ -94,6 +107,8 @@ final class TicketsOffersViewController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         return button
     }()
+
+    var textFromDatePicker: String = ""
 
     init(viewModel: TicketsOffersViewModel) {
         self.viewModel = viewModel
@@ -121,8 +136,11 @@ final class TicketsOffersViewController: UIViewController {
         clearButton.addTarget(self, action: #selector(clearText), for: .touchUpInside)
         changeButton.addTarget(self, action: #selector(changeDestinationButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        datePicker.addTarget(self, action: #selector(dateChanged(_:)), for: .valueChanged)
+
 
         setupConstraints()
+        updateDateLabel(date: Date())
     }
 
     private func setupConstraints() {
@@ -150,8 +168,11 @@ final class TicketsOffersViewController: UIViewController {
         view.addSubview(backButtonView)
         backButtonView.translatesAutoresizingMaskIntoConstraints = false
 
-        view.addSubview(dateButton)
-        dateButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+
+        datePicker.addSubview(dateLabel)
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
 
         view.addSubview(numberOfPersonsButton)
         numberOfPersonsButton.translatesAutoresizingMaskIntoConstraints = false
@@ -196,13 +217,18 @@ final class TicketsOffersViewController: UIViewController {
             backButtonView.widthAnchor.constraint(equalToConstant: 105),
             backButtonView.heightAnchor.constraint(equalToConstant: 33),
 
-            dateButton.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 15),
-            dateButton.leadingAnchor.constraint(equalTo: backButtonView.trailingAnchor, constant: 8),
-            dateButton.widthAnchor.constraint(equalToConstant: 88),
-            dateButton.heightAnchor.constraint(equalToConstant: 33),
+            datePicker.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 15),
+            datePicker.leadingAnchor.constraint(equalTo: backButtonView.trailingAnchor, constant: 8),
+            datePicker.widthAnchor.constraint(equalToConstant: 88),
+            datePicker.heightAnchor.constraint(equalToConstant: 33),
+
+            dateLabel.topAnchor.constraint(equalTo: datePicker.topAnchor, constant: 0),
+            dateLabel.trailingAnchor.constraint(equalTo: datePicker.trailingAnchor, constant: 0),
+            dateLabel.bottomAnchor.constraint(equalTo: datePicker.bottomAnchor, constant: 0),
+            dateLabel.leadingAnchor.constraint(equalTo: datePicker.leadingAnchor, constant: 0),
 
             numberOfPersonsButton.topAnchor.constraint(equalTo: searchView.bottomAnchor, constant: 15),
-            numberOfPersonsButton.leadingAnchor.constraint(equalTo: dateButton.trailingAnchor, constant: 8),
+            numberOfPersonsButton.leadingAnchor.constraint(equalTo: datePicker.trailingAnchor, constant: 8),
             numberOfPersonsButton.widthAnchor.constraint(equalToConstant: 104),
             numberOfPersonsButton.heightAnchor.constraint(equalToConstant: 33),
 
@@ -225,7 +251,6 @@ final class TicketsOffersViewController: UIViewController {
             seeAllTicketsButton.heightAnchor.constraint(equalToConstant: 42),
             seeAllTicketsButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             seeAllTicketsButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-
         ])
     }
 
@@ -255,6 +280,18 @@ final class TicketsOffersViewController: UIViewController {
     func backButtonTapped() {
         self.dismiss(animated: true)
     }
+
+    @objc private func dateChanged(_ sender: UIDatePicker) {
+        updateDateLabel(date: sender.date)
+    }
+
+    private func updateDateLabel(date: Date) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MM"
+        dateLabel.text = dateFormatter.string(from: date)
+        textFromDatePicker = dateLabel.text ?? ""
+        viewModel.textFromDatePicker = textFromDatePicker
+    }
 }
 
 extension TicketsOffersViewController: UITableViewDelegate {
@@ -262,11 +299,11 @@ extension TicketsOffersViewController: UITableViewDelegate {
 }
 
 extension TicketsOffersViewController: UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.ticketsOffersModels.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ticketsOffersTableView.dequeueReusableCell(withIdentifier: TicketsOffersTableViewCell.reuseID, for: indexPath)
         guard let ticketsOfferCell = cell as? TicketsOffersTableViewCell else { return cell }

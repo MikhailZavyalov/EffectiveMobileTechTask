@@ -61,6 +61,7 @@ final class AllTicketsViewController: UIViewController {
         }
         returnButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         cities.text = "\(viewModel.fromTextFieldText)-\(viewModel.toTextFieldText)"
+        passengerDetails.text = "\(viewModel.textFromDatePicker), 1 пассажир"
 
         setupConstraints()
     }

@@ -9,6 +9,7 @@ final class TicketsOffersViewModel {
 
     var fromTextFieldLastValue: String?
     var toTextFieldLastValue: String?
+    var textFromDatePicker: String?
 
     weak var ticketsOffersViewController: TicketsOffersViewController?
 
@@ -42,9 +43,11 @@ final class TicketsOffersViewModel {
             let fromTextFieldLastValue,
             !fromTextFieldLastValue.isEmpty,
             let toTextFieldLastValue,
-            !toTextFieldLastValue.isEmpty
+            !toTextFieldLastValue.isEmpty,
+            let textFromDatePicker,
+            !textFromDatePicker.isEmpty
         else { return }
-        router.presentAllTicketsViewController(from: ticketsOffersViewController, fromTextFieldText: fromTextFieldLastValue, toTextFieldText: toTextFieldLastValue)
+        router.presentAllTicketsViewController(from: ticketsOffersViewController, fromTextFieldText: fromTextFieldLastValue, toTextFieldText: toTextFieldLastValue, textFromDatePicker: textFromDatePicker)
     }
 }
 

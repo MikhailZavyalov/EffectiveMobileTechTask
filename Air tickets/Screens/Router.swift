@@ -22,9 +22,9 @@ final class Router {
         vc.present(ticketsOffersVC, animated: true)
     }
 
-    func presentAllTicketsViewController(from vc: UIViewController, fromTextFieldText: String, toTextFieldText: String) {
+    func presentAllTicketsViewController(from vc: UIViewController, fromTextFieldText: String, toTextFieldText: String, textFromDatePicker: String) {
         let model = AllTicketsModel(networkService: AppDelegate.networkService)
-        let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFieldText, toTextFieldText: toTextFieldText)
+        let viewModel = AllTicketsViewModel(model: model, router: AppDelegate.router, fromTextFieldText: fromTextFieldText, toTextFieldText: toTextFieldText, textFromDatePicker: textFromDatePicker)
         let allTicketsVC = AllTicketsViewController(viewModel: viewModel)
         allTicketsVC.modalTransitionStyle = .coverVertical
         allTicketsVC.modalPresentationStyle = .fullScreen
